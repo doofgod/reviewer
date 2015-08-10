@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<img src="{{ home_url }}{{ MEDIA_URL }}{{ picture }}"> 
+
+
+
+<p>You are now logged in </p>
+
+<p>User:</p>
+{{ user }} 
+
+
+
+{% endblock %}

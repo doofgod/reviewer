@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="icon" href="../static/favicon.ico"> 
+    <title>Reviewer</title>
+    
+
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/base.css" rel="stylesheet" media="screen">
+    <link href="/static/navbar.css" rel="stylesheet">
+    <link href="/static/custom.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>	 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    
+	<script>
+		$(document).ready(function(){
+
+			
+			var csrftoken = $('[name = "csrfmiddlewaretoken"]').val();
+			//alert(csrftoken);
+			
+			$( "#jquerybutton" ).click(function(){
+				firstValue  = $("#searchvalue").val();
+				secondValue = $("#searchvalue2").val();
+				$.ajax({
+					
+					  beforeSend: function( xhr ){
+						  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+					  },
+					  method: "POST",
+					  url: "/books/jquerytest",
+					  data: { name: firstValue, location: secondValue },
+					  error: function(req, resulttype, exc){alert("there was an error"); },
+					  success: function(data, textStatus, jqXHR){
+						  document.getElementById('results').innerHTML= data; 
+						  }	  
+					});
+				
+				
+				
+
+			});
+		});
+	//			$.ajax({
+	//				  method: "POST",
+	//				  url: "/books/jquerytest",
+	//				  data: { name: "John", location: "Boston" }
+	//				})
+	//				  .done(function() {
+	//				    alert( "Data Saved: ");
+	//				  });
+			
+		
+//			$( "#jquerybutton" ).click(function() {
+//				  //var  the_data = $("#searchvalue2").val();
+//				  $("#results").load('/books/jquerytest', 'fuck the police',
+//						  function(){
+//					  		alert('Load was performed');
+//				  })
+//			});
+
+		
+
+//		$(document).ready(function(){
+//			if (typeof jQuery != 'undefined') {				 
+//			    alert("jQuery library is loaded!");			 
+//			}else{			 
+//			    alert("jQuery library is not found!");		 
+//			}
+//		});
+		
+		// using jQuery
+	function getCookie(name) {
+	    var cookieValue = null;
+	    if (document.cookie && document.cookie != '') {
+	        var cookies = document.cookie.split(';');
+	        for (var i = 0; i < cookies.length; i++) {
+	            var cookie = jQuery.trim(cookies[i]);
+	            // Does this cookie string begin with the name we want?
+	            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                break;
+	            }
+	        }
+	    }
+	    return cookieValue;
+}
+
+		function changeText(){
+			document.getElementById('myDiv').innerHTML = 'Fred Flinstone';
+		}
+		
+		function loadXMLDoc()
+		{
+			//alert('loadXML called');
+			{
+				var xmlhttp;
+				if (window.XMLHttpRequest)
+				  {// code for IE7+, Firefox, Chrome, Opera, Safari
+				  //alert('xmlhttp set');
+				  xmlhttp=new XMLHttpRequest();
+				  }
+				else
+				  {// code for IE6, IE5
+				  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				  }
+				xmlhttp.onreadystatechange=function()
+				  {
+					
+				 if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				    {
+					 
+					  document.getElementById('myDiv').innerHTML = 'Fred Flinstone';
+					  
+					  document.getElementById('context').innerHTML = xmlhttp.responseText;
+					  alert(xmlhttp.responseText);
+					}
+				  }
+				//xmlhttp.open("POST","../static/ajax_info.txt",true);
+				//xmlhttp.send();
+				var  the_data = 'test='+document.getElementById('txt2').innerHTML;
+				xmlhttp.open("POST","../static/ajax_test.php",true);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.send(the_data);
+				}
+		}
+		
+		function help_click(div, txt) {
+			if (div.innerHTML == "") div.innerHTML = "<br/>   " + txt; else div.innerHTML = ""; }
+			
+		function showValue(newValue)
+			{
+				document.getElementById("range").innerHTML=newValue;
+			}	
+			
+		
+		</script>
+
+</head>
+
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	      <div class="container">
+	        <div class="navbar-header">
+            	<a class="navbar-brand">Reviewer</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+              <li class="active"><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href = "#">Some option</a></li>
+              
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Profile<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href = "#">Edit Profile</a></li>
+                  <li><a href = "#">Who Viewed Your Profile</a></li>
+                  <li><a href = "#">Your Updates</a></li>
+                  <li class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">More options</a></li>
+                  <li><a href="#">More options</a></li>
+                </ul>
+              </li>
+				
+			{% if user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join CompanyCollection<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href = "#">See jobs</a></li>
+                  <li><a href =  "#">Rate coworkers</a></li>
+
+                  <li class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+              
+             {% endif %} 
+              
+             <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">User Settings<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href = "{% url 'uploadprofilepicture' %}">Upload Profile Picture</a></li>
+                  <li><a href =  "{% url 'changepassword' %}">Change Password</a></li>
+                  <li><a href = "{% url 'logout' %}">Logout</a></li>
+                  <li class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                  <li><a href = "{% url 'logout' %}">Logout</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+          </div>
+    </nav>  
+    <br>
+    <br>
+    <br>
+<div class = "container">
+
+	<div style = "text-align:center">
+		{% for o in messages %}
+			<div class = "alert-danger" role = "alert">
+				<li>{{ o }}</li>
+			</div>
+		{% empty %}
+			<div >
+				<p>No messages</p>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+</br>
+
+<div class = "container">
+	{% block content %}
+	{% endblock %}
+</div>
+
+<footer class = "footer">
+	<div class = "container"> 
+		<p class = "text-muted">This is a footer</p>
+	</div>
+</footer>
+
+</body>
+
+
+

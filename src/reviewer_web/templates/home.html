@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<img src="{{ home_url }}{{ MEDIA_URL }}{{ picture }}"> 
+
+
+{% if user.is_authenticated %}
+	<p>You are now logged in </p>
+
+{% else %} 
+
+	<p>You are not logged in </p>
+
+{% endif %} 
+
+<p>User:</p>
+{{ user }} 
+
+
+
+{% endblock %}

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, hashers
 from forms import UserForm, LoginForm, PasswordChangeForm, ForgotPasswordForm, UploadProfilePictureForm
 from django.core.files.images import get_image_dimensions
-from phagebook.settings import MEDIA_ROOT, MEDIA_URL
+from reviewer.settings import MEDIA_ROOT, MEDIA_URL
 from models import UserProfilePicture
 import os 
 from django.conf import settings

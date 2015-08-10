@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+
+{% if stockdata %}
+	{% for property in stockdata %} 
+		<p> {{ property }} </p>
+	{% endfor %}
+{% else %}
+<h1>Looking for stocks? Put in symbol below</h1>
+{% endif%}
+
+
+<form action="{% url 'stocksearch' %} " method="post">
+{% csrf_token %}
+<input type="submit" value="Submit" />
+	<input id= "id_stocksearchvalue" name="stocksearchvalue"  type = "text" value = "GOOG">
+
+
+{% for property in properties %}
+	{% if property.name == "Name" or property.name == "Symbol" %}
+		<input id= "id_{{ property.name }}" name="{{ property.name }}" TYPE="checkbox" checked>{{ property.description }}<p>
+	{% endif %}
+{% endfor %}
+</form>
+
+
+
+
+
+   
+
+
+
+<div id="myDiv"></div>
+<button type="button" onclick="loadXMLDoc()">Change Content</button>
+<div id="txt2">This string will be sent with Ajax to the server, via POST, and processed with PHP</div>
+<div id="context">Here will be displayed the response from the php script.</div>
+
+
+
+{% csrf_token %}
+
+<button id= "jquerybutton" type="button" >JQuery Test</button>
+<br>
+<input id= "searchvalue" type = "text" value = "test1">
+<input id= "searchvalue2" type = "text" value = "test2">
+
+<div id= "results"></div>
+
+
+
+<h3>Sample Page</h3>
+
+<a onclick='help_click(help1, "Additional text for title 1")'>?</a> Title 1 <div id="help1"></div>
+<a onclick='help_click(help2, "Additional text for title 2")'>?</a> Title 2 <div id="help2"></div>
+
+
+</body>
+
+
+
+{% endblock %}

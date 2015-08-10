@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+
+<form action = {% url 'twittersearch' %} method = "post">
+
+{% csrf_token %}
+
+<select id = "idTwitterselect" name = "twitterselect">
+	{% for profile in profilelist %}
+		<option value = "{{ profile }}"> {{ profile }} </option>
+	{% endfor %}
+</select>
+
+ <input type = "submit" value = "Submit" />
+ 
+</form>
+
+<br>
+
+{% for tweet in tweetlist %} 
+<ul>
+
+<li> {{ tweet }} </li>
+
+</ul>
+
+
+{% empty %}
+
+No tweet list given
+
+{% endfor %} 
+</body>
+
+
+
+{% endblock %}
