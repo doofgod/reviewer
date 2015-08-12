@@ -4,7 +4,7 @@ from django.core.files import File
 from django.core.files.images import get_image_dimensions
 #from models import UserProfilePicture
 from accounts.models import UserProfilePicture
-from accounts.views import getProfilePicture
+from accounts.views import getProfilePicture, signup
 from django.contrib.auth.models import User
 #from accounts.models import User
 from django.contrib.auth.decorators import login_required
@@ -32,4 +32,4 @@ def home_page(request):
                                                      'MEDIA_URL': MEDIA_URL})
          
     else:
-        return render(request, 'signup.html')
+        return signup(request)

@@ -1,13 +1,215 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<p>This is the signup page</p>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="icon" href="../static/favicon.ico"> 
+    <title>Reviewer</title>
+    
+
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/base.css" rel="stylesheet" media="screen">
+    <link href="/static/navbar.css" rel="stylesheet">
+    <link href="/static/custom.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>	 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    
+	<script>
+		$(document).ready(function(){
+
+			
+			var csrftoken = $('[name = "csrfmiddlewaretoken"]').val();
+			//alert(csrftoken);
+			
+			$( "#jquerybutton" ).click(function(){
+				firstValue  = $("#searchvalue").val();
+				secondValue = $("#searchvalue2").val();
+				$.ajax({
+					
+					  beforeSend: function( xhr ){
+						  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+					  },
+					  method: "POST",
+					  url: "/books/jquerytest",
+					  data: { name: firstValue, location: secondValue },
+					  error: function(req, resulttype, exc){alert("there was an error"); },
+					  success: function(data, textStatus, jqXHR){
+						  document.getElementById('results').innerHTML= data; 
+						  }	  
+					});
+				
+				
+				
+
+			});
+		});
+	//			$.ajax({
+	//				  method: "POST",
+	//				  url: "/books/jquerytest",
+	//				  data: { name: "John", location: "Boston" }
+	//				})
+	//				  .done(function() {
+	//				    alert( "Data Saved: ");
+	//				  });
+			
+		
+//			$( "#jquerybutton" ).click(function() {
+//				  //var  the_data = $("#searchvalue2").val();
+//				  $("#results").load('/books/jquerytest', 'fuck the police',
+//						  function(){
+//					  		alert('Load was performed');
+//				  })
+//			});
+
+		
+
+//		$(document).ready(function(){
+//			if (typeof jQuery != 'undefined') {				 
+//			    alert("jQuery library is loaded!");			 
+//			}else{			 
+//			    alert("jQuery library is not found!");		 
+//			}
+//		});
+		
+		// using jQuery
+	function getCookie(name) {
+	    var cookieValue = null;
+	    if (document.cookie && document.cookie != '') {
+	        var cookies = document.cookie.split(';');
+	        for (var i = 0; i < cookies.length; i++) {
+	            var cookie = jQuery.trim(cookies[i]);
+	            // Does this cookie string begin with the name we want?
+	            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                break;
+	            }
+	        }
+	    }
+	    return cookieValue;
+}
+
+		function changeText(){
+			document.getElementById('myDiv').innerHTML = 'Fred Flinstone';
+		}
+		
+		function loadXMLDoc()
+		{
+			//alert('loadXML called');
+			{
+				var xmlhttp;
+				if (window.XMLHttpRequest)
+				  {// code for IE7+, Firefox, Chrome, Opera, Safari
+				  //alert('xmlhttp set');
+				  xmlhttp=new XMLHttpRequest();
+				  }
+				else
+				  {// code for IE6, IE5
+				  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				  }
+				xmlhttp.onreadystatechange=function()
+				  {
+					
+				 if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				    {
+					 
+					  document.getElementById('myDiv').innerHTML = 'Fred Flinstone';
+					  
+					  document.getElementById('context').innerHTML = xmlhttp.responseText;
+					  alert(xmlhttp.responseText);
+					}
+				  }
+				//xmlhttp.open("POST","../static/ajax_info.txt",true);
+				//xmlhttp.send();
+				var  the_data = 'test='+document.getElementById('txt2').innerHTML;
+				xmlhttp.open("POST","../static/ajax_test.php",true);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.send(the_data);
+				}
+		}
+		
+		function help_click(div, txt) {
+			if (div.innerHTML == "") div.innerHTML = "<br/>   " + txt; else div.innerHTML = ""; }
+			
+		function showValue(newValue)
+			{
+				document.getElementById("range").innerHTML=newValue;
+			}	
+			
+		
+		</script>
+
+</head>
+
+<body>
+
+<header class = "header">
+Join or something like that..
+</header>
+
+<div class = "signupcontent">
+	<p>This is the signup page!</p>
+	
+	<div class = "signupform"> 
+		<form action="{% url 'signup' %} " method="post">
+		    {% csrf_token %}
+		    {{ signupForm.non_field_errors }}
+		    
+		    <div class="fieldwrapper">
+		    	<label for="{{ signupForm.firstname.id_for_label }}">First Name:</label>
+    			{{ signupForm.firstname }}
+    			{{ signupForm.firstname.errors }}
+		    </div>
+
+		    <div class="fieldwrapper">
+		    	<label for="{{ signupForm.lastname.id_for_label }}">Last Name:</label>
+    			{{ signupForm.lastname }}
+    			{{ signupForm.lastname.errors }}
+		    </div>
+		    
+		    <div class="fieldwrapper">
+		    	<label for="{{ signupForm.password.id_for_label }}">Password:</label>
+    			{{ signupForm.password }}
+    			{{ signupForm.password.errors }}
+		    </div>		
+		    	    
+		    <div class="fieldwrapper">
+		    	<label for="{{ signupForm.email.id_for_label }}">Email:</label>
+    			{{ signupForm.email }}
+    			{{ signupForm.email.errors }}
+		    </div>		    
+		    
+		    <input type="submit" value="Submit" />
+		</form>
+	</div>
+	
+	
+	<div>
+	{% if signupForm.errors %}
+	
+		{% for field, errors in signupForm. %} 
+		
+		
+		
+		{% endfor %}
+	{% endif %}
+	</div>
+</div>
 
 
-<form action="{% url 'signup' %} " method="post">
-    {% csrf_token %}
-    {{ userForm }}
-    <input type="submit" value="Submit" />
-</form>
-{% endblock %}
+<footer class = "footer">
+	<div class = "container"> 
+		<p class = "text-muted">This is a footer</p>
+	</div>
+</footer>
+
+</body>
 

@@ -10,8 +10,8 @@ from django.contrib.auth.models import User
     
 #    def is_authenticated(self):
 #        return True
-    
-    
+
+
 class UserProfilePicture(models.Model):
     userFK = models.ForeignKey(User, default ="1")
     image = models.ImageField(upload_to='profiles')

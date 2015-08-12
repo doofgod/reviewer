@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, hashers
-from forms import UserForm, LoginForm, PasswordChangeForm, ForgotPasswordForm, UploadProfilePictureForm
+from forms import SignupForm, LoginForm, PasswordChangeForm, ForgotPasswordForm, UploadProfilePictureForm
 from django.core.files.images import get_image_dimensions
 from reviewer.settings import MEDIA_ROOT, MEDIA_URL
 from models import UserProfilePicture
@@ -12,26 +12,32 @@ from django.core.mail import send_mail
 
 
 def signup(request):
-
+    print "request method: " + str(request.method)
+    messages =[]
     if request.method == 'POST':
-        userForm = UserForm(request.POST)
-        if userForm.is_valid():
-            username = userForm.cleaned_data['username']
-            password = userForm.cleaned_data['password']
-            email = userForm.cleaned_data['email']
-            user = User.objects.create_user(username, email, password)
+        signupForm = SignupForm(request.POST)
+        if signupForm.is_valid():
+            username = signupForm.cleaned_data['Email']
+            firstName = signupForm.cleaned_data['FirstName']
+            lastName = signupForm.cleaned_data['LastName']
+            password = signupForm.cleaned_data['Password']
+            email = signupForm.cleaned_data['Email']
+            user = User.objects.create_user(username, email, password, first_name = firstName, last_Name = lastName)
             user.save()
-            messages =[]
+            
             messages.append('User added')
             user = authenticate(username=username, password=password)
             login(request, user)
             
             #need to add something here to return the image
-            return render(request, 'homeLoggedIn.html',{'messages': messages})
-            
+            return render(request, 'home.html',{'messages': messages})
+        else:
+            messages.append('Something was screwed up with the form, try again')
+            return render(request, 'signup.html', {'messages': messages, 'signupForm': signupForm})
     else:
-        userForm = UserForm()
-        return render(request, 'signup.html',{'userForm': userForm})
+        signupForm = SignupForm()
+        
+        return render(request, 'signup.html',{'signupForm': signupForm})
 
 
 def changePassword(request):
