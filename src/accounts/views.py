@@ -17,18 +17,21 @@ def signup(request):
     if request.method == 'POST':
         signupForm = SignupForm(request.POST)
         if signupForm.is_valid():
-            username = signupForm.cleaned_data['Email']
-            firstName = signupForm.cleaned_data['FirstName']
-            lastName = signupForm.cleaned_data['LastName']
-            password = signupForm.cleaned_data['Password']
-            email = signupForm.cleaned_data['Email']
-            user = User.objects.create_user(username, email, password, first_name = firstName, last_Name = lastName)
+            username = signupForm.cleaned_data['email']
+            
+            # validate that a user does not already exist with that email
+            
+            firstName = signupForm.cleaned_data['firstname']
+            lastName = signupForm.cleaned_data['lastname']
+            password = signupForm.cleaned_data['password']
+            email = signupForm.cleaned_data['email']
+            user = User.objects.create_user(username, email, password, first_name = firstName, last_name = lastName)
             user.save()
             
             messages.append('User added')
             user = authenticate(username=username, password=password)
             login(request, user)
-            
+           # reverse()
             #need to add something here to return the image
             return render(request, 'home.html',{'messages': messages})
         else:
