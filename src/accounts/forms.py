@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class SignupForm(forms.Form):
     firstname = forms.CharField(label='First Name', max_length=100)
     lastname = forms.CharField(label='LastName', max_length=100)
-    password = forms.CharField(label='Password', max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput, label='Password', max_length=100)
     email = forms.CharField(label='Email', max_length=100)
     
     def clean_email(self):
@@ -25,7 +25,7 @@ class SignupForm(forms.Form):
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username', max_length=100)
-    password = forms.CharField(label='Password', max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput, label='Password', max_length=100)
 
 class PasswordChangeForm(forms.Form):
     oldpassword = forms.CharField(label='password', max_length=100)

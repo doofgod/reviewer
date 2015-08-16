@@ -36,11 +36,11 @@ def signup(request):
             return render(request, 'home.html',{'messages': messages})
         else:
             messages.append('Something was screwed up with the form, try again')
-            return render(request, 'signup.html', {'messages': messages, 'signupForm': signupForm})
+            return render(request, 'signup.html', {'messages': messages, 'signupForm': signupForm, 'loginForm': LoginForm})
     else:
         signupForm = SignupForm()
-        
-        return render(request, 'signup.html',{'signupForm': signupForm})
+        loginForm = LoginForm()
+        return render(request, 'signup.html',{'signupForm': signupForm,'loginForm': loginForm})
 
 
 def changePassword(request):

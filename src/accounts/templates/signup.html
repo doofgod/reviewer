@@ -152,7 +152,30 @@
 <body>
 
 <header class = "header">
-Join or something like that..
+
+<div class = "headerinfo">
+	<p>Join or something like that!</p>
+<div>
+<div class = "loginform"> 
+	{% csrf_token %}
+			<form action="{% url 'login' %} " method="post">
+				{% csrf_token %}
+				{{ loginForm.non_field_errors }}
+				
+				<div class="fieldwrapper">
+			    	<label for="{{ loginForm.username.id_for_label }}">User Name:</label>
+	    			{{ loginForm.username }}
+			    </div>
+			    
+			    <div class="fieldwrapper">
+			    	<label for="{{ loginForm.password.id_for_label }}">Password:</label>
+	    			{{ loginForm.password }}
+			    </div>
+			    
+			    <input type="submit" value="Submit" />
+			</form>
+	</div>
+
 </header>
 
 <div class = "signupcontent">
