@@ -151,30 +151,33 @@
 
 <body>
 
-<header class = "header">
-
-<div class = "headerinfo">
-	<p>Join or something like that!</p>
-<div>
-<div class = "loginform"> 
-	{% csrf_token %}
-			<form action="{% url 'login' %} " method="post">
+<header class = "header navbar navbar-inverse navbar-fixed-top">
+	<div class = "container">
+	<div id="navbar" class = "navbar-collapse collapse">
+		<a class = "navbar-brand" href="#">Join or something like that!</a>
+		
+		
+			<form class = "navbar-form navbar-right" action="{% url 'login' %} " method="post">
 				{% csrf_token %}
-				{{ loginForm.non_field_errors }}
-				
-				<div class="fieldwrapper">
+
+				<div class="form-group">
 			    	<label for="{{ loginForm.username.id_for_label }}">User Name:</label>
 	    			{{ loginForm.username }}
 			    </div>
 			    
-			    <div class="fieldwrapper">
+			    <div class="form-group">
 			    	<label for="{{ loginForm.password.id_for_label }}">Password:</label>
 	    			{{ loginForm.password }}
 			    </div>
 			    
-			    <input type="submit" value="Submit" />
+			    <button type = "submit" value = "submit" class = "btn btn-success">Sign in</button>
 			</form>
+		
+	<div>
 	</div>
+<div class = "headerinfo">
+	
+<div>
 
 </header>
 
